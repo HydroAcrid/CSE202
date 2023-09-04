@@ -43,6 +43,18 @@ void convert(const char* hexStr) {
     printf("\n");
 }
 
+void showShortType(short input) {
+
+}   
+
+void showLongType(long input) {
+
+}
+
+void showDoubleType(double input) {
+    
+}
+
 int main() {
     char* symbol = "FF";
     convert(symbol);
