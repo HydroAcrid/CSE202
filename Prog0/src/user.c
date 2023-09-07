@@ -12,11 +12,15 @@ void new_password(user_t *u) {
     const char characters[] = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789!@#$%^&*()-=_+";
     int characterLength = sizeof(characters) - 1;
 
-    //Between 8 and 10. %3 awlays returns from 0 - 2 
+    //Between 8 and 10. % 3 awlays returns from 0 - 2 
     int passLength = rand() % 3 + 8; 
 
     //Adds the characters into the password once the length is decided 
     for(int i=0; i < passLength; i++) {
         u -> password[i] = characters[rand() % characterLength];
     }
+
+    //Print it out for debuggin
+    printf("The generated password is: %s\n", u->password);
 }
+
