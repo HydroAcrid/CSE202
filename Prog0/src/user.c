@@ -24,3 +24,11 @@ void new_password(user_t *u) {
     printf("The generated password is: %s\n", u->password);
 }
 
+int read_users(user_t *user_list, char* filemame) {
+    FILE *file = fopen(filemame, "r");
+    //Checks if the file is there
+    if(file == NULL) {
+        return -1;
+    }
+}
+
