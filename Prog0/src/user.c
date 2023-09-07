@@ -30,5 +30,7 @@ int read_users(user_t *user_list, char* filemame) {
     if(file == NULL) {
         return -1;
     }
+
+
 }
 
