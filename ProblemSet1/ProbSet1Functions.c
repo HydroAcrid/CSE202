@@ -3,6 +3,7 @@
 #include <string.h>
 #include <stdint.h>
 
+
 void convert(const char* hexStr) {
     int num = 0;
     int len = strlen(hexStr);
@@ -43,16 +44,25 @@ void convert(const char* hexStr) {
     printf("\n");
 }
 
-void showShortType(short input) {
+typedef char *byte_pointer;
 
-}   
-
-void showLongType(long input) {
-
+void show_bytes(byte_pointer start, size_t len) {
+    size_t i;
+    for (i = 0; i < len; i++)
+    printf(" %.2x", start[i]); //line:data:show_bytes_printf
+    printf("\n");
 }
 
-void showDoubleType(double input) {
-    
+void show_Short(short input) {
+    show_bytes((byte_pointer) &input, sizeof(short)); 
+}   
+
+void show_Long(long input) {
+    show_bytes((byte_pointer) &input, sizeof(long));
+}
+
+void show_Double(double input) {
+    show_bytes((byte_pointer) &input, sizeof(double));
 }
 
 int main() {
