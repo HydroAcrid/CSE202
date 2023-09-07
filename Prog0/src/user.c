@@ -25,10 +25,17 @@ void new_password(user_t *u) {
 }
 
 int read_users(user_t *user_list, char* filemame) {
+    //Set up my variables
+    char* username;
+    char* password;
+    int count = 0;
+    int accessLvl = 0;
+
+    //Opening the file 
     FILE *file = fopen(filemame, "r");
     //Checks if the file is there
     if(file == NULL) {
-        return -1;
+        return -1; //File could not be opened 
     }
 
 
