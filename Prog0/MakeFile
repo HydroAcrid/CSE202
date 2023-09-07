@@ -1,0 +1,11 @@
+prog0:
+
+prog0.o:
+
+user.o:
+
+libuser.a:
+
+clean:
+	rm -rf build
+	rm prog0
