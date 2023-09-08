@@ -38,6 +38,13 @@ int read_users(user_t *user_list, char* filemame) {
         return -1; //File could not be opened 
     }
 
+    while (fscanf(file, "%s %s %d\n", user_list[count].username, user_list[count].password, &accessLvl) != EOF) {
+        //converts the access value to an enum value
+        if(accessLvl == 1) {
+            user_list[count]
+        }
+    } 
+
 
 }
 
