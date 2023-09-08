@@ -26,8 +26,8 @@ void new_password(user_t *u) {
 
 int read_users(user_t *user_list, char* filemame) {
     //Set up my variables
-    char* username;
-    char* password;
+    char username[100]; //these are buffers
+    char password[100];
     int count = 0;
     int accessLvl = 0;
 
@@ -38,13 +38,27 @@ int read_users(user_t *user_list, char* filemame) {
         return -1; //File could not be opened 
     }
 
-    while (fscanf(file, "%s %s %d\n", user_list[count].username, user_list[count].password, &accessLvl) != EOF) {
-        //converts the access value to an enum value
-        if(accessLvl == 1) {
-            user_list[count]
+    while (fscanf(file, "%s %s %d\n", username, password, &accessLvl) != EOF) {
+        // Allocate memory and copy the username and password
+        user_list[count].username = strdup(username);
+        user_list[count].password = strdup(password);
+
+        // Convert the access level to the enum value
+        if (accessLvl == 1) {
+            user_list[count].privilege = ADMIN;
+        } else {
+            user_list[count].privilege = USER;
         }
-    } 
+        count++;
+    }
 
-
+    fclose(file);
+    return count; //Number of users read from the file 
 }
+
+int save_users(user_t *user_list, char* filename) {
+    //Set up me variables
+}
+
+
 
