@@ -24,7 +24,7 @@ void new_password(user_t *u) {
     printf("The generated password is: %s\n", u->password);
 }
 
-int read_users(user_t *user_list, char* filemame) {
+int read_users(user_t *user_list, char* filename) {
     //Set up my variables
     char username[100]; //these are buffers
     char password[100];
@@ -32,7 +32,7 @@ int read_users(user_t *user_list, char* filemame) {
     int accessLvl = 0;
 
     //Opening the file 
-    FILE *file = fopen(filemame, "r");
+    FILE *file = fopen(filename, "r");
     //Checks if the file is there
     if(file == NULL) {
         return -1; //File could not be opened 
@@ -56,8 +56,22 @@ int read_users(user_t *user_list, char* filemame) {
     return count; //Number of users read from the file 
 }
 
-int save_users(user_t *user_list, char* filename) {
-    //Set up me variables
+int save_users(user_t *user_list, char* filename, int size) {
+    //Opening the file
+    FILE *file = fopen(filename, "r");
+    //Checks if the file is there
+    if(file == NULL) {
+        return -1; //File could not be opened 
+    }
+
+    //Saves the file 
+    for(int i = 0; i < size; ++i) {
+        fprintf(file, "%s %s %d\n", user_list[i].username, user_list[i].password, user_list[i].privilege);
+    }
+
+    //Closeses the file 
+    fclose(file);
+    return 0; // Writing to the file was successful
 }
 
 
