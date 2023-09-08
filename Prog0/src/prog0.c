@@ -59,8 +59,21 @@ int main (int argc, char *argv[]) {
             //Privilege Selection
             printf("Enter user privileges (1 for admin, 0 for user): ");
             scanf("%d", &privilege);
-            
 
+            //Find the username 
+            index = find_user(users, username, NULL, user_count);
+            if(index = 1) {
+                //Add a new user 
+                strcpy(users[user_count].username, username);
+                users[user_count].privilege ? ADMIN : USER;
+                new_password(&users[user_count]);
+                printf("User added successfully: %s\n", username);
+                user_count++;
+                modified = 1;
+            }
+            else {
+                printf("Username already exists.");
+            }
             break;
 
             //Resetting a user's password
