@@ -41,7 +41,49 @@ int main (int argc, char *argv[]) {
     }
 
     int choice;
-    int modified = 0;
+    int modified = 0; //Checks to see if a new user was made or if a password was changed
+    //While true loop
+    while(1) {
+        printf("1. Add a new user\n 2.Reset Password of an Existing User\n 3.Logout\n Enter Choice: ");
+        scanf("%d", choice);
+
+        switch(choice) {
+            //Adding new User 
+            case 1:
+
+            break;
+
+            //Resetting a user's password
+            case 2:
+            printf("Enter the username of the user whose password you want to reset: ");
+            scanf("%s", username);
+            index = find_user(users, username, NULL, user_count);
+            if (index != -1) {
+                printf("Creating new password...");
+                new_password(&users[index]);
+                printf("New password created.");
+                printf("Password reset successfully for user %s.\n", username);
+                modified = 1;
+            } else {
+                printf("Username not found.\n");
+            }
+            
+            break;
+
+            //Logging out
+            case 3:
+                if(modified) {
+                    save_users(users, argv[1], user_count);
+                }
+            printf("Logging off...");
+            return 0; 
+        }
+    
+
+
+
+    }
+
 
 
 

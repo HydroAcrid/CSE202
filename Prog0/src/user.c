@@ -19,6 +19,9 @@ void new_password(user_t *u) {
     for(int i=0; i < passLength; i++) {
         u -> password[i] = characters[rand() % characterLength];
     }
+    
+    //resets the password length
+    u->password[passLength] = '\0'; 
 
     //Print it out for debuggin
     printf("The generated password is: %s\n", u->password);
