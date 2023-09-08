@@ -1,11 +1,21 @@
-prog0:
+prog0: build/lib/libuser.a build/objects/prog0.o
+	gcc build/objects/prog0.o -o prog0 -luser -Lbuild/lib/
 
-prog0.o:
+prog0.o: src/prog0.c include/user.h
+	gcc src/prog0.c -c -Iinclude
+	mkdir -p build/objects/
+	mv prog0.o build/objects/
 
-user.o:
+user.o: src/user.c include/user.h
+	gcc src/user.c -c -Iinclude
+	mkdir -p build/objects/
+	mv user.o build/objects/
 
-libuser.a:
+libuser.a: build/objects/user.o
+	ar rs libuser.a build/objects/user.o
+	mkdir -p build/lib/
+	mv libuser.a build/lib/
 
 clean:
 	rm -rf build
-	rm prog0
+	rm -f prog0

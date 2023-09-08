@@ -6,8 +6,6 @@
 
 void new_password(user_t *u) {
     //Generate a random number between 8 to 10 characters
-    srand(time(NULL));
-
     //Characters that can be in the password
     const char characters[] = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789!@#$%^&*()-=_+";
     int characterLength = sizeof(characters) - 1;
@@ -19,7 +17,7 @@ void new_password(user_t *u) {
     for(int i=0; i < passLength; i++) {
         u -> password[i] = characters[rand() % characterLength];
     }
-    
+
     //resets the password length
     u->password[passLength] = '\0'; 
 
@@ -98,6 +96,15 @@ int find_user(user_t *user_list, char* username, char* password, int size) {
     }
     //If the username is not found, return -1
     return -1; 
+}
+
+//Frees the memory used by the user list 
+void free_user_list(user_t *user_list, int size) {
+    for (int i = 0; i < size; ++i) {
+        free(user_list[i].username);
+        free(user_list[i].password);
+    }
+    free(user_list);
 }
 
 

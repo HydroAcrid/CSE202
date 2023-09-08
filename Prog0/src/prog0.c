@@ -4,6 +4,7 @@
 #include "user.h"
 
 int main (int argc, char *argv[]) {
+    srand(time(NULL));
     //variable set up
     user_t *users; 
     char *username;
@@ -15,6 +16,16 @@ int main (int argc, char *argv[]) {
     int user_count = read_users(&users, "users.txt");
     if(user_count == -1) {
         printf("Could not read user file");
+        free_user_list(users, user_count);
+        return 1;
+    }
+    else if(user_count != -1) {
+        printf("File %s loaded successfully!\n", argv[1]);
+        printf("Enter login credentials: \n");
+    }
+    else {
+        printf("Error reading file \n");
+        free_user_list(users, user_count);
         return 1;
     }
 
@@ -27,9 +38,18 @@ int main (int argc, char *argv[]) {
 
         //Find the username
         index = find_user(users, username, password, user_count);
-        if(index == -1 && users[index].privilege == ADMIN) {
-            break;
+        if(index != -1) {
+            if(users[index].privilege == ADMIN) {
+                break;
+            }
+            else {
+                printf("You do not have admin rights \n");
+            }
         }
+        else {
+            printf("User not found \n");
+        }
+
         attempt++; //I might need to move this under the printf 
         printf("Username not found. %d attempts left. Please try again.\n", (3-attempt));
     }
@@ -37,6 +57,7 @@ int main (int argc, char *argv[]) {
     //Closes program after 3 tries to find a username 
     if(attempt == 3) {
         printf("3 attempts have been done. Exiting program... \n");
+        free_user_list(users, user_count);
         return 1;
     }
 
@@ -45,7 +66,7 @@ int main (int argc, char *argv[]) {
     //While true loop
     while(1) {
         printf("1. Add a new user\n 2.Reset Password of an Existing User\n 3.Logout\n Enter Choice: ");
-        scanf("%d", choice);
+        scanf("%d", &choice);
 
         switch(choice) {
             //Adding new User 
@@ -62,10 +83,10 @@ int main (int argc, char *argv[]) {
 
             //Find the username 
             index = find_user(users, username, NULL, user_count);
-            if(index = 1) {
+            if(index == -1) {
                 //Add a new user 
-                strcpy(users[user_count].username, username);
-                users[user_count].privilege ? ADMIN : USER;
+                users[user_count].username = strdup(username);
+                users[user_count].privilege = privilege ? ADMIN : USER;
                 new_password(&users[user_count]);
                 printf("User added successfully: %s\n", username);
                 user_count++;
@@ -99,10 +120,9 @@ int main (int argc, char *argv[]) {
                     save_users(users, argv[1], user_count);
                 }
             printf("Logging off...");
+            free_user_list(users, user_count);
             return 0; 
         }
-    
-
 
 
     }
