@@ -75,4 +75,26 @@ int save_users(user_t *user_list, char* filename, int size) {
 }
 
 
+int find_user(user_t *user_list, char* username, char* password, int size) {
+    for(int i = 0; i < size; i++) {
+        //compares the usernames 
+        if(strcmp(user_list[i].username, username) == 0) { 
+            //If the password is null, return the index for username match 
+            if(password == NULL) { 
+                return i;
+            }
+            //If the password isn't null, check if the password matches
+            else if(strcmp(user_list[i].password, password) == 0) {
+                return i;
+            }
+            //username matches but the password doesn't
+            else {
+                return -1; 
+            }
+        }
+    }
+    //If the username is not found, return -1
+    return -1; 
+}
+
 
