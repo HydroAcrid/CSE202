@@ -50,6 +50,16 @@ int main (int argc, char *argv[]) {
         switch(choice) {
             //Adding new User 
             case 1:
+            int privilege;
+
+            //Username Selection
+            printf("Enter Username: ");
+            scanf("%s", username);
+
+            //Privilege Selection
+            printf("Enter user privileges (1 for admin, 0 for user): ");
+            scanf("%d", &privilege);
+            
 
             break;
 
