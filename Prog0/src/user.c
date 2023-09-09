@@ -5,23 +5,18 @@
 #include "user.h"
 
 void new_password(user_t *u) {
-    //Generate a random number between 8 to 10 characters
-    //Characters that can be in the password
     const char characters[] = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789!@#$%^&*()-=_+";
     int characterLength = sizeof(characters) - 1;
-
-    //Between 8 and 10. % 3 awlays returns from 0 - 2 
-    int passLength = rand() % 3 + 8; 
-
-    //Adds the characters into the password once the length is decided 
-    for(int i=0; i < passLength; i++) {
-        u -> password[i] = characters[rand() % characterLength];
+    int passLength = rand() % 3 + 8;
+    u->password = malloc(passLength + 1);
+    if (u->password == NULL) {
+        printf("Memory allocation failed for password.\n");
+        exit(1);
     }
-
-    //resets the password length
-    u->password[passLength] = '\0'; 
-
-    //Print it out for debuggin
+    for(int i = 0; i < passLength; i++) {
+        u->password[i] = characters[rand() % characterLength];
+    }
+    u->password[passLength] = '\0';
     printf("The generated password is: %s\n", u->password);
 }
 
@@ -67,19 +62,34 @@ int read_users(user_t **user_list, char* filename) {
 }
 
 int save_users(user_t *user_list, char* filename, int size) {
-    //Opening the file
-    FILE *file = fopen(filename, "r");
-    //Checks if the file is there
+    // //Opening the file
+    // FILE *file = fopen(filename, "w");
+    // //Checks if the file is there
+    // if(file == NULL) {
+    //     return -1; //File could not be opened 
+    // }
+
+    // //Saves the file 
+    // for(int i = 0; i < size; ++i) {
+    //     fprintf(file, "%s %s %d\n", user_list[i].username, user_list[i].password, user_list[i].privilege);
+    // }
+
+    // //Closeses the file 
+    // fclose(file);
+    // return 0; // Writing to the file was successful
+    // Opening the file in write mode
+    FILE *file = fopen(filename, "w");
+    // Checks if the file is there
     if(file == NULL) {
-        return -1; //File could not be opened 
+        return -1; // File could not be opened 
     }
 
-    //Saves the file 
+    // Saves the file 
     for(int i = 0; i < size; ++i) {
         fprintf(file, "%s %s %d\n", user_list[i].username, user_list[i].password, user_list[i].privilege);
     }
 
-    //Closeses the file 
+    // Closes the file 
     fclose(file);
     return 0; // Writing to the file was successful
 }

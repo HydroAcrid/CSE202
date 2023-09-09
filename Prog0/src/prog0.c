@@ -3,37 +3,31 @@
 #include <string.h>
 #include <time.h>
 #include "user.h"
+#define MAX_USERS 150
 
 int main (int argc, char *argv[]) {
-     if(argc < 2) {
+    if(argc < 2) {
         printf("Usage: %s <filename>\n", argv[0]);
         return 1;
     }
 
     srand(time(NULL));
-    //variable set up
-    user_t *users; 
-    char username[100];
-    char password[100];
+    user_t *users = NULL;
+    char username[100] = {0};
+    char password[100] = {0};
     int attempt = 0;
     int index = 0;
 
-    //Reading file 
     int user_count = read_users(&users, argv[1]);
     if(user_count == -1) {
-        printf("Could not read user file");
+        printf("Could not read user file\n");
         free_user_list(users, user_count);
         return 1;
-    }
-    else if(user_count != -1) {
+    } else {
         printf("File %s loaded successfully!\n", argv[1]);
         printf("Enter login credentials: \n");
     }
-    else {
-        printf("Error reading file \n");
-        free_user_list(users, user_count);
-        return 1;
-    }
+
 
     //Username and password input
     while(attempt < 3) {
@@ -72,7 +66,7 @@ int main (int argc, char *argv[]) {
     int privilege;
     //While true loop
     while(1) {
-        printf("1. Add a new user\n 2.Reset Password of an Existing User\n 3.Logout\n Enter Choice: ");
+        printf("Welcome!\n 1. Add a new user\n 2.Reset Password of an Existing User\n 3.Logout\n Enter Choice: ");
         scanf("%d", &choice);
 
         switch(choice) {
@@ -88,19 +82,34 @@ int main (int argc, char *argv[]) {
             scanf("%d", &privilege);
 
             //Find the username 
+            
             index = find_user(users, username, NULL, user_count);
             if(index == -1) {
-                //Add a new user 
+                // Check if we've reached the maximum number of users
+                if (user_count >= MAX_USERS) {
+                    printf("Reached maximum number of users.\n");
+                    break;
+                }
+                // Add a new user 
                 users[user_count].username = strdup(username);
+                if (users[user_count].username == NULL) {
+                    printf("Memory allocation failed for username.\n");
+                    break;
+                }
                 users[user_count].privilege = privilege ? ADMIN : USER;
                 new_password(&users[user_count]);
+                if (users[user_count].password == NULL) {
+                    printf("Memory allocation failed for password.\n");
+                    break;
+                }
                 printf("User added successfully: %s\n", username);
                 user_count++;
                 modified = 1;
             }
             else {
-                printf("Username already exists.");
+                printf("Username already exists.\n");
             }
+
             break;
 
             //Resetting a user's password
@@ -122,7 +131,7 @@ int main (int argc, char *argv[]) {
 
             //Logging out
             case 3:
-                if(modified) {
+                if(modified == 1) {
                     save_users(users, argv[1], user_count);
                 }
             printf("Logging off...");
