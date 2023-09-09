@@ -25,36 +25,45 @@ void new_password(user_t *u) {
     printf("The generated password is: %s\n", u->password);
 }
 
-int read_users(user_t *user_list, char* filename) {
-    //Set up my variables
-    char username[100]; //these are buffers
+int read_users(user_t **user_list, char* filename) {
+    // Set up my variables
+    char username[100]; // these are buffers
     char password[100];
     int count = 0;
     int accessLvl = 0;
+    int maxUsers = 100; // You can adjust this value based on your needs
 
-    //Opening the file 
+    // Allocate memory for the user list
+    *user_list = malloc(maxUsers * sizeof(user_t));
+    if (*user_list == NULL) {
+        return -1; // Memory allocation failed
+    }
+
+    // Opening the file
     FILE *file = fopen(filename, "r");
-    //Checks if the file is there
-    if(file == NULL) {
-        return -1; //File could not be opened 
+    // Checks if the file is there
+    if (file == NULL) {
+        free(*user_list); // Free the allocated memory
+        return -1; // File could not be opened
     }
 
     while (fscanf(file, "%s %s %d\n", username, password, &accessLvl) != EOF) {
         // Allocate memory and copy the username and password
-        user_list[count].username = strdup(username);
-        user_list[count].password = strdup(password);
+        (*user_list)[count].username = strdup(username);
+        (*user_list)[count].password = strdup(password);
 
         // Convert the access level to the enum value
         if (accessLvl == 1) {
-            user_list[count].privilege = ADMIN;
+            (*user_list)[count].privilege = ADMIN;
         } else {
-            user_list[count].privilege = USER;
+            (*user_list)[count].privilege = USER;
         }
         count++;
+
     }
 
     fclose(file);
-    return count; //Number of users read from the file 
+    return count; // Number of users read from the file
 }
 
 int save_users(user_t *user_list, char* filename, int size) {

@@ -1,19 +1,25 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
+#include <time.h>
 #include "user.h"
 
 int main (int argc, char *argv[]) {
+     if(argc < 2) {
+        printf("Usage: %s <filename>\n", argv[0]);
+        return 1;
+    }
+
     srand(time(NULL));
     //variable set up
     user_t *users; 
-    char *username;
-    char *password;
+    char username[100];
+    char password[100];
     int attempt = 0;
     int index = 0;
 
     //Reading file 
-    int user_count = read_users(&users, "users.txt");
+    int user_count = read_users(&users, argv[1]);
     if(user_count == -1) {
         printf("Could not read user file");
         free_user_list(users, user_count);
@@ -63,6 +69,7 @@ int main (int argc, char *argv[]) {
 
     int choice;
     int modified = 0; //Checks to see if a new user was made or if a password was changed
+    int privilege;
     //While true loop
     while(1) {
         printf("1. Add a new user\n 2.Reset Password of an Existing User\n 3.Logout\n Enter Choice: ");
@@ -71,7 +78,6 @@ int main (int argc, char *argv[]) {
         switch(choice) {
             //Adding new User 
             case 1:
-            int privilege;
 
             //Username Selection
             printf("Enter Username: ");
