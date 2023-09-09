@@ -44,7 +44,7 @@ int main (int argc, char *argv[]) {
                 break;
             }
             else {
-                printf("You do not have admin rights \n");
+                printf("You do not have admin right. You cannot access this file \n");
             }
         }
         else {
