@@ -13,7 +13,8 @@ int main (int argc, char *argv[]) {
 
     srand(time(NULL));
     user_t *users = NULL;
-    char username[100] = {0};
+    //allocating memory
+    char username[100] = {0}; 
     char password[100] = {0};
     int attempt = 0;
     int index = 0;
@@ -64,9 +65,10 @@ int main (int argc, char *argv[]) {
     int choice;
     int modified = 0; //Checks to see if a new user was made or if a password was changed
     int privilege;
+    int ch;
     //While true loop
     while(1) {
-        printf("Welcome!\n 1. Add a new user\n 2.Reset Password of an Existing User\n 3.Logout\n Enter Choice: ");
+        printf("Welcome!\n 1. Add a new user\n 2. Reset Password of an Existing User\n 3. Logout\n Enter Choice: ");
         scanf("%d", &choice);
 
         switch(choice) {
@@ -137,9 +139,13 @@ int main (int argc, char *argv[]) {
             printf("Logging off...");
             free_user_list(users, user_count);
             return 0; 
+
+            default:
+                printf("Not an option. Try again\n");
+                //This line clears the input so the loop doesn't infinitely loops
+                while ((ch = getchar()) != '\n' && ch != EOF);
+                continue; //start over
         }
-
-
     }
 
 

@@ -5,14 +5,16 @@
 #include "user.h"
 
 void new_password(user_t *u) {
+    //Var of all valid characters for the password 
     const char characters[] = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789!@#$%^&*()-=_+";
-    int characterLength = sizeof(characters) - 1;
-    int passLength = rand() % 3 + 8;
-    u->password = malloc(passLength + 1);
+    int characterLength = sizeof(characters) - 1; //Makes sure password isn't more than 10 
+    int passLength = rand() % 3 + 8; //8 to 10 characters
+    u->password = malloc(passLength + 1); //allocates memory for password 
     if (u->password == NULL) {
         printf("Memory allocation failed for password.\n");
         exit(1);
     }
+    //Puts characters into password 
     for(int i = 0; i < passLength; i++) {
         u->password[i] = characters[rand() % characterLength];
     }
@@ -62,22 +64,7 @@ int read_users(user_t **user_list, char* filename) {
 }
 
 int save_users(user_t *user_list, char* filename, int size) {
-    // //Opening the file
-    // FILE *file = fopen(filename, "w");
-    // //Checks if the file is there
-    // if(file == NULL) {
-    //     return -1; //File could not be opened 
-    // }
-
-    // //Saves the file 
-    // for(int i = 0; i < size; ++i) {
-    //     fprintf(file, "%s %s %d\n", user_list[i].username, user_list[i].password, user_list[i].privilege);
-    // }
-
-    // //Closeses the file 
-    // fclose(file);
-    // return 0; // Writing to the file was successful
-    // Opening the file in write mode
+    //Puts the file in write mode to make sure 
     FILE *file = fopen(filename, "w");
     // Checks if the file is there
     if(file == NULL) {
