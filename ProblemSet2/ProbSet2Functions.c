@@ -1,5 +1,5 @@
 #include <stdio.h>
-
+#include <limits.h>
 
 /*
 * Generate mask indicating rightmost 1 in x. Assume w = 32.
@@ -21,8 +21,16 @@ int rightmost_one(unsigned x) {
         }
         mask <<= 1;
     }
-
     return 0; 
+}
+
+
+int numbah6(int x) {
+     // Multiply by 5
+    int output = (x << 2) + x;  // 4*x + x -> shifts to the left twice than adds x. 2^2 = 4 
+
+    // Divide by 8
+    return output >> 3; //Would use / 8 but it said to follow bit-level integer coding rules. 2^3 = 8
 }
 
 
@@ -31,4 +39,6 @@ int main() {
     int num = (int)2147483648U;
     int maskCheck = rightmost_one(80);
     printf("This is it: %d \n", maskCheck);
+    printf("mul5div8(10) = %d\n", mul5div8(10));  // Should print 6
+    printf("mul5div8(-10) = %d\n", mul5div8(-10));  // Should print -6
 }
