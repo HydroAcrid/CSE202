@@ -33,6 +33,15 @@ int numbah6(int x) {
     return output >> 3; //Would use / 8 but it said to follow bit-level integer coding rules. 2^3 = 8
 }
 
+/* Determine whether arguments can be subtracted without overflow */
+int tsub_ok(int x, int y) {
+    // Check for overflow conditions
+    if ((x > 0 && y < INT_MIN + x) || (x < 0 && y > INT_MAX + x)) { //This shows what happens when subtracting a negative number from a positive number or vice verse 
+        return 0;  // Overflow
+    }
+    return 1;  // No overflow
+}
+
 
 
 int main() {
