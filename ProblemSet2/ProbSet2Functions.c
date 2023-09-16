@@ -36,9 +36,10 @@ int numbah6(int x) {
 /* Determine whether arguments can be subtracted without overflow */
 int tsub_ok(int x, int y) {
     // Check for overflow conditions
-    if ((x > 0 && y < INT_MIN + x) || (x < 0 && y > INT_MAX + x)) { //This shows what happens when subtracting a negative number from a positive number or vice verse 
-        return 0;  // Overflow
+    if((x > 0 && y < 0 && (x-y) < 0) || (x < 0 && y > 0 && (x-y) > 0)) {
+        return 0;
     }
+
     return 1;  // No overflow
 }
 
@@ -46,8 +47,9 @@ int tsub_ok(int x, int y) {
 
 int main() {
     int num = (int)2147483648U;
-    int maskCheck = rightmost_one(80);
+    int maskCheck = rightmost_one(56);
     printf("This is it: %d \n", maskCheck);
-    printf("mul5div8(10) = %d\n", mul5div8(10));  // Should print 6
-    printf("mul5div8(-10) = %d\n", mul5div8(-10));  // Should print -6
+    printf("mul5div8(10) = %d\n", numbah6(10));  // Should print 6
+    printf("mul5div8(-10) = %d\n", numbah6(-10));  // Should print -6
+    printf("Please work: %d", tsub_ok(INT_MAX, -1));
 }
