@@ -1,0 +1,3 @@
+[submodule "Prog1/prog1-HydroAcrid"]
+	path = Prog1/prog1-HydroAcrid
+	url = https://github.com/LU-CSE202/prog1-HydroAcrid.git
