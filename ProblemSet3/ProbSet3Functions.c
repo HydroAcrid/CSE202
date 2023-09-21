@@ -40,6 +40,13 @@ unsigned float_twice(unsigned f) {
     return sign | (exp << 23) | frac; //use or statements to combine 
 }
 
+char decode(int x, unsigned n) {
+    int t1 = x;
+    int t2 = n & x;
+    int t3 = t1 | t2;
+    int t4 = t3 << n;
+    return (char)t4;
+}
 
 int main() {
     unsigned f1 = 0x40C80000; // Representing 6.0 in IEEE 754
@@ -49,4 +56,6 @@ int main() {
     printf("Twice of 6.0: 0x%X\n", float_twice(f1));
     printf("Twice of Infinity: 0x%X\n", float_twice(f2));
     printf("Twice of smallest denormalized: 0x%X\n", float_twice(f3));
+    char test = decode(5,1093844);
+    printf("%s", test);
 }
