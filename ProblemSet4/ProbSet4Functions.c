@@ -1,3 +1,5 @@
+#include <stdio.h>
+
 long loop(long x, int n) { 
     // Variable setup 
 	long result = 0;              
@@ -11,8 +13,7 @@ long loop(long x, int n) {
 	return result;
 }
 
-
-long switch(long x, long n) {
+long switchFunc(long x, long n) {
     long result = x;
     switch(n - 60) {
         case 0:
@@ -34,5 +35,41 @@ long switch(long x, long n) {
     }
     return result;
 }
+
+ long switch_fn(long x, long n) {
+    long result = x;
+    switch(n) {
+        case 60:
+        case 62:
+            result = x * 8;
+            break;
+        case 63:
+            result = x >> 3;
+            break;
+        case 64:
+            result = (x * 16) - x;
+            break;
+        case 65:
+            result = x * x;
+            break;
+        default:
+            result = x + 75;
+            break;
+    }
+    return result;
+}
+
+
+
+int main() {
+    long answer = switchFunc(3004567, 8003938);
+    printf("This is the output: %ld\n", answer);
+    answer = switch_fn(3004567,8003938);
+    printf("This is the output: %ld", answer);
+
+}
+
+
+
 
 
